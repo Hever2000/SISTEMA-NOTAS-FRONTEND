@@ -29,7 +29,7 @@ const Home = () => {
     try {
       await axios.delete(`${apiURL}/api/notes/${id}`);
       setNotes((prev) => prev.filter((n) => n._id !== id));
-      toast.dismiss("Nota eliminada con exito!");
+      toast.success("Nota eliminada con exito!");
     } catch (error) {
       console.log(error);
       toast.error("No se pudo eliminar la nota");

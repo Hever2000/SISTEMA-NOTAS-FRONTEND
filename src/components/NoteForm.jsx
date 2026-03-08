@@ -32,7 +32,7 @@ const NoteForm = ({ onSubmit, initialDate }) => {
           name="title"
           type="text"
           placeholder="Titulo de la nota"
-          value={note.title}
+          value={note.title ?? ""}
           onChange={handleChange}
         />
       </div>
@@ -47,7 +47,7 @@ const NoteForm = ({ onSubmit, initialDate }) => {
           name="content"
           placeholder="Contenido de la nota"
           rows="5"
-          value={note.content}
+          value={note.content ?? ""}
           onChange={handleChange}
         />
       </div>
