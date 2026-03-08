@@ -1,6 +1,7 @@
+import Button from "daisyui/components/button";
 import { Link } from "react-router-dom";
 
-function NoteCard({id, title, content }) {
+function NoteCard({id, title, content, onDelete }) {
   return (
     <>
       <div className="bg-gray-900 rounded-lg shadow-md p-4 w-50">
@@ -10,7 +11,10 @@ function NoteCard({id, title, content }) {
           <Link to={`/edit/${id}`} className="text-blue-500 cursor-pointer mr-2">
             <i className="fas fa-edit"></i>
           </Link>
+          <button onClick={() => onDelete(id)}>
             <i className="fas fa-trash text-red-500 cursor-pointer"></i>
+          </button>
+            
         
         </div>
       </div>

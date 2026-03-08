@@ -1,10 +1,11 @@
 import NoteCard from "../components/NoteCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
-  const[loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const apiURL = import.meta.env.VITE_API_URL;
 
@@ -21,7 +22,21 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if(loading){<span>Cargando...</span>}
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("¿Seguro que quieres eliminar la nota?");
+    if (!confirm) return;
+
+    try {
+      await axios.delete(`${apiURL}/api/notes/${id}`);
+      setNotes((prev) => prev.filter((n) => n._id !== id));
+      toast.dismiss("Nota eliminada con exito!");
+    } catch (error) {
+      console.log(error);
+      toast.error("No se pudo eliminar la nota");
+    }
+  };
+
+  if (loading) <span>Cargando...</span>;
 
   return (
     <>
@@ -32,13 +47,14 @@ const Home = () => {
         <p className="text-lg text-gray-300">
           Organiza tus notas de manera eficiente
         </p>
-        <div className="mt-6 w-full flex justify-center gap-5">
+        <div className="mt-6 w-full flex flex-wrap justify-center gap-5">
           {notes.map((note) => (
-            <NoteCard 
+            <NoteCard
               key={note._id}
               title={note.title}
               content={note.content}
               id={note._id}
+              onDelete={handleDelete}
             />
           ))}
         </div>
